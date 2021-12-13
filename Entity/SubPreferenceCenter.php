@@ -7,6 +7,9 @@ use Mautic\CoreBundle\Doctrine\Mapping\ClassMetadataBuilder;
 use Mautic\CoreBundle\Entity\CommonEntity;
 use Mautic\PageBundle\Entity\Page;
 use Mautic\UserBundle\Entity\User;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 class SubPreferenceCenter extends CommonEntity {
 
@@ -65,6 +68,26 @@ class SubPreferenceCenter extends CommonEntity {
       ->columnName('created_by_user')
       ->nullable()
       ->build();
+  }
+
+  /**
+   * Form validation rules.
+   */
+  public static function loadValidatorMetadata(ClassMetadata $metadata) {
+    $metadata->addPropertyConstraint('name', new NotBlank([
+      'message' => 'mautic.core.name.required',
+    ]));
+
+    $metadata->addPropertyConstraint('token', new NotBlank([
+      'message' => 'mautic.core.value.required',
+    ]));
+    $metadata->addPropertyConstraint('token', new Regex([
+      'pattern' => '/^[A-Z_-]+$/',
+    ]));
+
+    $metadata->addPropertyConstraint('page', new NotBlank([
+      'message' => 'mautic.core.value.required',
+    ]));
   }
 
   /**

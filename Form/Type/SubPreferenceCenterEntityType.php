@@ -9,6 +9,7 @@ use Mautic\PageBundle\Form\Type\PageListType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SubPreferenceCenterEntityType extends AbstractType {
 
@@ -45,7 +46,10 @@ class SubPreferenceCenterEntityType extends AbstractType {
         'label' => 'mautic.subpreference_center.field.token',
         'required' => TRUE,
         'label_attr' => ['class' => 'control-label'],
-        'attr' => ['class' => 'form-control'],
+        'attr' => [
+          'class' => 'form-control',
+          'tooltip' => 'mautic.subpreference_center.field.token.tooltip',
+        ],
       ]
     );
 

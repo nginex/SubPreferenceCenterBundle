@@ -35,11 +35,6 @@ return [
         ],
       ],
     ],
-    'events' => [
-      'mautic.subPreferenceCenter.form.subscriber' => [
-        'class' => 'MauticPlugin\SubPreferenceCenterBundle\EventListener\FormSubscriber',
-      ],
-    ],
     'models' => [
       'mautic.subPreferenceCenter.model.subPreferenceCenter' => [
         'class' => 'MauticPlugin\SubPreferenceCenterBundle\Model\SubPreferenceCenterModel',

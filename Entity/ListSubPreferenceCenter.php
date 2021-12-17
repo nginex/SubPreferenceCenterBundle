@@ -35,7 +35,7 @@ class ListSubPreferenceCenter {
       ->build();
 
     $builder->createManyToOne('subPreferenceCenter', SubPreferenceCenter::class)
-      ->addJoinColumn('subpreference_id', 'id', TRUE, FALSE, 'SET NULL')
+      ->addJoinColumn('subpreference_id', 'id', FALSE, FALSE, 'CASCADE')
       ->build();
 
     $builder->addDateAdded();

@@ -40,7 +40,7 @@ class LeadListSubscriber implements EventSubscriberInterface {
    */
   public static function getSubscribedEvents() {
     return [
-      LeadEvents::LIST_PRE_SAVE => ['onListPreSave', 0],
+      LeadEvents::LIST_POST_SAVE => ['onListPostSave', 0],
     ];
   }
 
@@ -50,7 +50,7 @@ class LeadListSubscriber implements EventSubscriberInterface {
    * @param \Mautic\LeadBundle\Event\LeadListEvent $event
    *   The lead list event.
    */
-  public function onListPreSave(LeadListEvent $event) {
+  public function onListPostSave(LeadListEvent $event) {
     // @TODO find more elegant way to get value from the form.
     $request = $this->requestStack->getCurrentRequest();
     if ($values = $request->get('leadlist')) {

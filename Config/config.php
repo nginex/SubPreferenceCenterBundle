@@ -26,13 +26,44 @@ return [
           \MauticPlugin\SubPreferenceCenterBundle\Entity\SubPreferenceCenter::class,
         ],
       ],
+      'mautic.subPreferenceCenter.repository.listSubPreferenceCenter' => [
+        'class' => Doctrine\ORM\EntityRepository::class,
+        'factory' => ['@doctrine.orm.entity_manager', 'getRepository'],
+        'arguments' => [
+          \MauticPlugin\SubPreferenceCenterBundle\Entity\ListSubPreferenceCenter::class,
+        ],
+      ],
     ],
     'forms' => [
       'mautic.subPreferenceCenter.form.type.subPreferenceCenter' => [
-        'class' => 'MauticPlugin\SubPreferenceCenterBundle\Form\Type\SubPreferenceCenterEntityType',
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\Form\Type\SubPreferenceCenterType',
         'arguments' => [
           'doctrine.orm.entity_manager',
         ],
+      ],
+      'mautic.subPreferenceCenter.form.type.subPreferenceCenter.list' => [
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\Form\Type\SubPreferenceCenterListType',
+        'arguments' => [
+          'mautic.subPreferenceCenter.model.subPreferenceCenter',
+        ],
+      ],
+    ],
+    'events' => [
+      'mautic.subPreferenceCenter.form.type.subscriber' => [
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\EventListener\FormTypeSubscriber',
+        'arguments' => [
+          'doctrine.orm.entity_manager',
+        ],
+      ],
+      'mautic.subPreferenceCenter.lead.list.subscriber' => [
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\EventListener\LeadListSubscriber',
+        'arguments' => [
+          'request_stack',
+          'doctrine.orm.entity_manager',
+        ],
+      ],
+      'mautic.subPreferenceCenter.view.subscriber' => [
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\EventListener\ViewSubscriber',
       ],
     ],
     'models' => [

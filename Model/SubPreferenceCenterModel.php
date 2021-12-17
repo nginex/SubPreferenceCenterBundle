@@ -4,7 +4,7 @@ namespace MauticPlugin\SubPreferenceCenterBundle\Model;
 
 use Mautic\CoreBundle\Model\FormModel;
 use MauticPlugin\SubPreferenceCenterBundle\Entity\SubPreferenceCenter;
-use MauticPlugin\SubPreferenceCenterBundle\Form\Type\SubPreferenceCenterEntityType;
+use MauticPlugin\SubPreferenceCenterBundle\Form\Type\SubPreferenceCenterType;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
 class SubPreferenceCenterModel extends FormModel {
@@ -35,7 +35,7 @@ class SubPreferenceCenterModel extends FormModel {
       $options['action'] = $action;
     }
 
-    return $formFactory->create(SubPreferenceCenterEntityType::class, $entity, $options);
+    return $formFactory->create(SubPreferenceCenterType::class, $entity, $options);
   }
 
   /**

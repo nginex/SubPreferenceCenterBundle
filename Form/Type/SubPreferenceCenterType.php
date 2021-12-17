@@ -6,18 +6,22 @@ use Doctrine\ORM\EntityManager;
 use Mautic\CoreBundle\Form\DataTransformer\IdToEntityModelTransformer;
 use Mautic\CoreBundle\Form\Type\FormButtonsType;
 use Mautic\PageBundle\Form\Type\PageListType;
+use MauticPlugin\SubPreferenceCenterBundle\Entity\SubPreferenceCenter;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SubPreferenceCenterEntityType extends AbstractType {
+class SubPreferenceCenterType extends AbstractType {
 
   /**
    * @var \Doctrine\ORM\EntityManagerInterface
    */
   protected $em;
 
+  /**
+   * SubPreferenceCenterType constructor.
+   */
   public function __construct(EntityManager $em) {
     $this->em = $em;
   }
@@ -77,6 +81,15 @@ class SubPreferenceCenterEntityType extends AbstractType {
     if (!empty($options['action'])) {
       $builder->setAction($options['action']);
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function configureOptions(OptionsResolver $resolver) {
+    $resolver->setDefaults([
+      'data_class' => SubPreferenceCenter::class,
+    ]);
   }
 
 }

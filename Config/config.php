@@ -74,11 +74,13 @@ return [
   ],
   'menu' => [
     'main' => [
-      'mautic.subpreference_center.menu.index' => [
-        'route' => 'mautic_subpreference_center_index',
-        'access' => 'subPreferenceCenter:subPreferenceCenter:view',
-        'iconClass' => 'fa-tasks',
-        'priority' => 1,
+      'items' => [
+        'mautic.subpreference_center.menu.index' => [
+          'route' => 'mautic_subpreference_center_index',
+          'access' => 'subPreferenceCenter:subPreferenceCenter:view',
+          'parent' => 'mautic.core.components',
+          'priority' => 150,
+        ],
       ],
     ],
   ],

@@ -65,6 +65,15 @@ return [
       'mautic.subPreferenceCenter.view.subscriber' => [
         'class' => 'MauticPlugin\SubPreferenceCenterBundle\EventListener\ViewSubscriber',
       ],
+      'mautic.subPreferenceCenter.email.subscriber' => [
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\EventListener\EmailSubscriber',
+        'arguments' => [
+          'doctrine.orm.entity_manager',
+          'mautic.helper.core_parameters',
+          'mautic.page.model.page',
+          'translator',
+        ],
+      ],
     ],
     'models' => [
       'mautic.subPreferenceCenter.model.subPreferenceCenter' => [

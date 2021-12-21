@@ -21,6 +21,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class BuilderSubscriber implements EventSubscriberInterface {
 
   const subSegmentListRegex = '{subsegmentlist}';
+  const successmessage = '{successmessage}';
 
   /**
    * @var \Symfony\Contracts\Translation\TranslatorInterface
@@ -125,6 +126,7 @@ class BuilderSubscriber implements EventSubscriberInterface {
     if (!$entity) {
       return;
     }
+    $params['message_visible'] = FALSE;
 
     // Save settings.
     if ($saved_pref && $request->getMethod() !== 'GET') {
@@ -143,6 +145,8 @@ class BuilderSubscriber implements EventSubscriberInterface {
       if (count($to_be_removed)) {
         $lead_model->removeFromLists($lead, array_values($to_be_removed));
       }
+
+      $params['message_visible'] = TRUE;
     }
 
     $params['entity'] = $entity;
@@ -154,6 +158,22 @@ class BuilderSubscriber implements EventSubscriberInterface {
       $list = $this->renderSubSegmentList($params);
       $content = str_ireplace(self::subSegmentListRegex, $list, $content);
     }
+
+    $successMessageDataSlots = [
+      'data-slot="successmessage"',
+      'class="pref-successmessage"',
+    ];
+    $successMessageDataSlotsHidden = [];
+    $visibility = $params['message_visible'] ? 'block' : 'none';
+
+    foreach ($successMessageDataSlots as $successMessageDataSlot) {
+      $successMessageDataSlotsHidden[] = $successMessageDataSlot . ' style=display:' . $visibility;
+    }
+    $content = str_replace(
+      $successMessageDataSlots,
+      $successMessageDataSlotsHidden,
+      $content
+    );
 
     $event->setContent($content);
   }
@@ -204,7 +224,6 @@ class BuilderSubscriber implements EventSubscriberInterface {
       'saved_preferences' => 1,
     ];
     $action = $page_model->buildUrl('mautic_page_public', $route_params);
-
 
     $available_lists = $this->getAvailableListOptions($entity);
     $lead_lists = $lead_model->getLists($params['lead'], TRUE, TRUE, TRUE, TRUE);

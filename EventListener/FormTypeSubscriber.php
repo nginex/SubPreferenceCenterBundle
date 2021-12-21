@@ -19,7 +19,7 @@ class FormTypeSubscriber implements EventSubscriberInterface {
   protected $em;
 
   /**
-   * SubPreferenceCenterType constructor.
+   * FormTypeSubscriber constructor.
    */
   public function __construct(EntityManager $em) {
     $this->em = $em;

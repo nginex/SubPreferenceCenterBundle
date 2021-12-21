@@ -26,6 +26,22 @@ class ListSubPreferenceCenterRepository extends CommonRepository {
     return $entity->getSubPreferenceCenter();
   }
 
+  public function getListIdsBySubPreferenceCenter(SubPreferenceCenter $center) {
+    /** @var \MauticPlugin\SubPreferenceCenterBundle\Entity\ListSubPreferenceCenter[] $entities */
+    $entities = $this->findBy(['subPreferenceCenter' => $center]);
+
+    $lists = [];
+    foreach ($entities as $entity) {
+      $list = $entity->getList();
+      $lists[] = [
+        'id' => $list->getId(),
+        'name' => $list->getName(),
+      ];
+    }
+
+    return $lists;
+  }
+
   /**
    * Save connection between sub preference center and lead list.
    *

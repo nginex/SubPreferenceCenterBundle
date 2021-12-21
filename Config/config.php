@@ -47,6 +47,15 @@ return [
           'mautic.subPreferenceCenter.model.subPreferenceCenter',
         ],
       ],
+      'mautic.subPreferenceCenter.form.type.slot.subsegmentlist' => [
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\Form\Type\SlotSubSegmentListType',
+        'arguments' => [
+          'translator',
+        ],
+      ],
+      'mautic.subPreferenceCenter.form.type.contact_segments' => [
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\Form\Type\ContactSegmentsType',
+      ],
     ],
     'events' => [
       'mautic.subPreferenceCenter.form.type.subscriber' => [
@@ -72,6 +81,25 @@ return [
           'mautic.helper.core_parameters',
           'mautic.page.model.page',
           'translator',
+        ],
+      ],
+      'mautic.subPreferenceCenter.builder.subscriber' => [
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\EventListener\BuilderSubscriber',
+        'arguments' => [
+          'translator',
+          'mautic.helper.templating',
+          'request_stack',
+          'doctrine.orm.entity_manager',
+          'mautic.model.factory',
+          'form.factory',
+          'templating.helper.form',
+        ],
+      ],
+      'mautic.subPreferenceCenter.event.assets.subscriber' => [
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\EventListener\AssetsSubscriber',
+        'arguments' => [
+          'grapesjsbuilder.config',
+          'mautic.install.service',
         ],
       ],
     ],

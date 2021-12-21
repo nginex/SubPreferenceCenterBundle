@@ -18,6 +18,14 @@ return [
     ],
   ],
   'services' => [
+    'permissions' => [
+      'mautic.subPreferenceCenter.permissions' => [
+        'class' => 'MauticPlugin\SubPreferenceCenterBundle\Security\Permissions\SubPreferenceCenterPermissions',
+        'arguments' => [
+          'mautic.helper.core_parameters',
+        ],
+      ],
+    ],
     'repositories' => [
       'mautic.subPreferenceCenter.repository.subPreferenceCenter' => [
         'class' => Doctrine\ORM\EntityRepository::class,

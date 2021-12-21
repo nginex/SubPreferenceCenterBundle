@@ -73,8 +73,8 @@ if ('index' == $tmpl) {
               [
                 'item' => $item,
                 'templateButtons' => [
-                  'edit' => $view['security']->isGranted('subReferenceCenter:subReferenceCenter:edit'),
-                  'delete' => $view['security']->isGranted('subReferenceCenter:subReferenceCenter:delete'),
+                  'edit' => $view['security']->isGranted('subPreferenceCenter:subPreferenceCenter:edit'),
+                  'delete' => $view['security']->isGranted('subPreferenceCenter:subPreferenceCenter:delete'),
                 ],
                 'routeBase' => 'mautic_subpreference_center',
                 'langVar' => 'subpreference_center',

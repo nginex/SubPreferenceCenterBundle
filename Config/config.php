@@ -16,6 +16,12 @@ return [
         'controller' => 'SubPreferenceCenterBundle:SubPreferenceCenter:execute',
       ],
     ],
+    'public' => [
+      'mautic_subpreference_center_contact_unsubscribe' => [
+        'path' => '/contact/preferences/{hash}/unsubscribe',
+        'controller' => 'SubPreferenceCenterBundle:ContactPreferences:unsubscribe',
+      ],
+    ],
   ],
   'services' => [
     'permissions' => [
@@ -31,14 +37,14 @@ return [
         'class' => Doctrine\ORM\EntityRepository::class,
         'factory' => ['@doctrine.orm.entity_manager', 'getRepository'],
         'arguments' => [
-          \MauticPlugin\SubPreferenceCenterBundle\Entity\SubPreferenceCenter::class,
+          'MauticPlugin\SubPreferenceCenterBundle\Entity\SubPreferenceCenter',
         ],
       ],
       'mautic.subPreferenceCenter.repository.listSubPreferenceCenter' => [
         'class' => Doctrine\ORM\EntityRepository::class,
         'factory' => ['@doctrine.orm.entity_manager', 'getRepository'],
         'arguments' => [
-          \MauticPlugin\SubPreferenceCenterBundle\Entity\ListSubPreferenceCenter::class,
+          'MauticPlugin\SubPreferenceCenterBundle\Entity\ListSubPreferenceCenter',
         ],
       ],
     ],
@@ -87,27 +93,8 @@ return [
         'arguments' => [
           'doctrine.orm.entity_manager',
           'mautic.helper.core_parameters',
-          'mautic.page.model.page',
+          'router',
           'translator',
-        ],
-      ],
-      'mautic.subPreferenceCenter.builder.subscriber' => [
-        'class' => 'MauticPlugin\SubPreferenceCenterBundle\EventListener\BuilderSubscriber',
-        'arguments' => [
-          'translator',
-          'mautic.helper.templating',
-          'request_stack',
-          'doctrine.orm.entity_manager',
-          'mautic.model.factory',
-          'form.factory',
-          'templating.helper.form',
-        ],
-      ],
-      'mautic.subPreferenceCenter.event.assets.subscriber' => [
-        'class' => 'MauticPlugin\SubPreferenceCenterBundle\EventListener\AssetsSubscriber',
-        'arguments' => [
-          'grapesjsbuilder.config',
-          'mautic.install.service',
         ],
       ],
     ],

@@ -7,9 +7,10 @@ use Mautic\CoreBundle\Helper\CoreParametersHelper;
 use Mautic\EmailBundle\EmailEvents;
 use Mautic\EmailBundle\Event\EmailBuilderEvent;
 use Mautic\EmailBundle\Event\EmailSendEvent;
-use Mautic\PageBundle\Model\PageModel;
 use MauticPlugin\SubPreferenceCenterBundle\Entity\SubPreferenceCenter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmailSubscriber implements EventSubscriberInterface {
@@ -25,9 +26,9 @@ class EmailSubscriber implements EventSubscriberInterface {
   protected $coreParametersHelper;
 
   /**
-   * @var \Mautic\PageBundle\Model\PageModel
+   * @var \Symfony\Component\Routing\RouterInterface
    */
-  protected $pageModel;
+  protected $router;
 
   /**
    * @var \Symfony\Contracts\Translation\TranslatorInterface
@@ -37,10 +38,10 @@ class EmailSubscriber implements EventSubscriberInterface {
   /**
    * EmailSubscriber constructor.
    */
-  public function __construct(EntityManagerInterface $em, CoreParametersHelper $core_parameters_helper, PageModel $page_model, TranslatorInterface $translator) {
+  public function __construct(EntityManagerInterface $em, CoreParametersHelper $core_parameters_helper, RouterInterface $router, TranslatorInterface $translator) {
     $this->em = $em;
     $this->coreParametersHelper = $core_parameters_helper;
-    $this->pageModel = $page_model;
+    $this->router = $router;
     $this->translator = $translator;
   }
 
@@ -111,13 +112,11 @@ class EmailSubscriber implements EventSubscriberInterface {
     }
 
     $params = [
-      'slug' => $this->pageModel->generateSlug($entity->getPage()),
-      'id_hash' => $id_hash,
-      'sub_pref_token' => $entity->getToken(),
+      'hash' => implode('-', [$id_hash, $entity->getId()]),
     ];
-    $page_public_url = $this->pageModel->buildUrl('mautic_page_public', $params);
+    $url = $this->router->generate('mautic_subpreference_center_contact_unsubscribe', $params, UrlGeneratorInterface::ABSOLUTE_URL);
 
-    return str_replace('|URL|', $page_public_url, $unsubscribe_text);
+    return str_replace('|URL|', $url, $unsubscribe_text);
   }
 
 }
